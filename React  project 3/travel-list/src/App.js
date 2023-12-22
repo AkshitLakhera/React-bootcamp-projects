@@ -3,16 +3,16 @@ import React, { useState } from 'react';;
 // Our next goal is how to put data which we got  from handleclick ( console.log(e)) to the place where we want it to show.
 // In react we do it with the help of control events.
 // number() to change the output which come as string by e.target.value to number
-const initialItems = [
-    { id: 1, description: "Passports", quantity: 2, packed: false },
-    { id: 2, description: "Socks", quantity: 12, packed: true },
-  ];
 export default function  App(){
+    const [items,setItems] = useState([]);
+    function handleAddItems(item){
+        setItems((items) => [...items,item]);
+    }
 return(
     <div className='app'>
     <Logo/>
-    <Form/>
-    <PackingList/>
+    <Form onAddItems={handleAddItems}/>
+    <PackingList items={items}/>
     <Stats/>
 
     </div>
@@ -21,7 +21,7 @@ return(
 function Logo () {
 return <h1>🌴 Far Away 💼</h1>
 }
-function Form (){
+function Form ({onAddItems}){
     const [description,setdescription] = useState("");
     const [quantity,setQuantity] = useState("1");
     function handleSubmit(e){
@@ -53,11 +53,11 @@ return (
     </form>
 )
 }
-function PackingList (){
+function PackingList ({items}){
 return(
 <div className = 'list'>
     <ul>
-    {initialItems.map(item=>(<Item item = {item} key = {item.id}/>))}
+    {items.map(item=>(<Item item = {item} key = {item.id}/>))}
 
 </ul>
 </div>
