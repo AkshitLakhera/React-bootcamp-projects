@@ -5,17 +5,23 @@ import React, { useState } from 'react';;
 // number() to change the output which come as string by e.target.value to number
 export default function  App(){
     const [items,setItems] = useState([]);
+
     function handleAddItems(item){
         setItems((items) => [...items,item]);
     }
     function handleDeleteItems(id){
         setItems((items) => items.filter((item) => item.id !== id));
     }
+    function handleToggleItems(id){
+        setItems((items) => items.map((item) =>  item.id === id ?{...item, packed: !item.packed } :item))
+    } 
+    // :item When you tick one box, you want to update the checked state for that specific item, but you don't want to accidentally change the checked state of any other boxes on the list.
+    // The : item part makes sure that only the clicked box gets updated, while the others stay as they were.
 return(
     <div className='app'>
     <Logo/>
     <Form onAddItems={handleAddItems}/>
-    <PackingList items={items}  onDeleteItems={handleDeleteItems}/>
+    <PackingList items={items}  onDeleteItems={handleDeleteItems} onToggleItems={handleToggleItems}/>
     <Stats/>
 
     </div>
@@ -56,19 +62,20 @@ return (
     </form>
 )
 }
-function PackingList ({items,onDeleteItems}){
+function PackingList ({items,onDeleteItems,onToggleItems}){
 return(
 <div className = 'list'>
     <ul>
-    {items.map(item=>(<Item item = {item}  key = {item.id}  onDeleteItems={onDeleteItems} />))}
+    {items.map(item=>(<Item item = {item}  key = {item.id}  onDeleteItems={onDeleteItems}  onToggleItems={onToggleItems}/>))}
 
 </ul>
 </div>
 );
 }
-function Item({item , onDeleteItems }){
+function Item({item , onDeleteItems , onToggleItems}){
     return (
     <li>
+    <input type="checkbox" value={item.packed} onChange={() => {onToggleItems(item.id)}} />
         <span style={item.packed ? {textDecoration:'line-through' }:{}}>
             {item.quantity} {item.description}
         </span>
