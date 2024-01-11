@@ -63,12 +63,29 @@ return (
 )
 }
 function PackingList ({items,onDeleteItems,onToggleItems}){
+const [sortBy,setSortBy] =useState("input") //by default sorted by input
+let sortedItem
+if(sortBy === "input")  sortedItem = items;
+if (sortBy=== "description") sortedItem =items
+.slice()
+.sort((a,b) => a.description.localCompare(b.description));
+if(sortBy === "packed") sortedItem= items
+.splice()
+.sort((a,b) =>  Number(a.packed) - Number(b.packed));
 return(
 <div className = 'list'>
     <ul>
-    {items.map(item=>(<Item item = {item}  key = {item.id}  onDeleteItems={onDeleteItems}  onToggleItems={onToggleItems}/>))}
+    {sortedItem.map(item=>(<Item item = {item}  key = {item.id}  onDeleteItems={onDeleteItems}  onToggleItems={onToggleItems}/>))}
 
 </ul>
+{/* Sorting element added */}
+<div className='actions'>
+    <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+        <option value="input">Sort by input</option>
+        <option value= "description">Sort by description</option>
+        <option value="packed">Sort by packed status</option>
+    </select>
+</div>
 </div>
 );
 }
