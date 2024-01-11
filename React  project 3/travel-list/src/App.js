@@ -4,7 +4,7 @@ import React, { useState } from 'react';;
 // In react we do it with the help of control events.
 // number() to change the output which come as string by e.target.value to number
 export default function  App(){
-    const [items,setItems] = useState([]);
+    const [items,setItems] = useState([]); 
 
     function handleAddItems(item){
         setItems((items) => [...items,item]);
@@ -22,7 +22,7 @@ return(
     <Logo/>
     <Form onAddItems={handleAddItems}/>
     <PackingList items={items}  onDeleteItems={handleDeleteItems} onToggleItems={handleToggleItems}/>
-    <Stats/>
+    <Stats items={items}/>
 
     </div>
 )
@@ -84,10 +84,13 @@ function Item({item , onDeleteItems , onToggleItems}){
     </li>
     );
 }
-function Stats (){
+function Stats ({items}){
+    const totalItems = items.length;
+    const numPacked =  items.filter((item) => item.packed).length;
+    const percentage = Math.round(numPacked/totalItems * 100)
     return(
     <footer className='stats'>
-        <em>You have X items on your list, and you already packed X (X%)</em>
+        <em>You have {totalItems} items on your list, and you already packed {numPacked} & is percent  {percentage}% packed</em>
     </footer>
 )
 }
