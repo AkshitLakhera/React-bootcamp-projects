@@ -76,7 +76,6 @@ return(
 <div className = 'list'>
     <ul>
     {sortedItem.map(item=>(<Item item = {item}  key = {item.id}  onDeleteItems={onDeleteItems}  onToggleItems={onToggleItems}/>))}
-
 </ul>
 {/* Sorting element added */}
 <div className='actions'>
