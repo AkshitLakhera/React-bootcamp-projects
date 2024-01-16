@@ -15,13 +15,16 @@ export default function  App(){
     function handleToggleItems(id){
         setItems((items) => items.map((item) =>  item.id === id ?{...item, packed: !item.packed } :item))
     } 
+    function handleDelteAll(){
+        setItems([]);
+    }
     // :item When you tick one box, you want to update the checked state for that specific item, but you don't want to accidentally change the checked state of any other boxes on the list.
     // The : item part makes sure that only the clicked box gets updated, while the others stay as they were.
 return(
     <div className='app'>
     <Logo/>
     <Form onAddItems={handleAddItems}/>
-    <PackingList items={items}  onDeleteItems={handleDeleteItems} onToggleItems={handleToggleItems}/>
+    <PackingList items={items}  onDeleteItems={handleDeleteItems} onToggleItems={handleToggleItems} ondeleteAll={handleDelteAll} />
     <Stats items={items}/>
 
     </div>
@@ -62,7 +65,7 @@ return (
     </form>
 )
 }
-function PackingList ({items,onDeleteItems,onToggleItems}){
+function PackingList ({items,onDeleteItems,onToggleItems,ondeleteAll}){
 const [sortBy,setSortBy] =useState("input") //by default sorted by input
 let sortedItem
 if(sortBy === "input")  sortedItem = items;
@@ -84,6 +87,7 @@ return(
         <option value= "description">Sort by description</option>
         <option value="packed">Sort by packed status</option>
     </select>
+    <button onClick={ondeleteAll}>Clear list</button>
 </div>
 </div>
 );
