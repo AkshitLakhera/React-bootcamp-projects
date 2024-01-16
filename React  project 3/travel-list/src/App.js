@@ -16,7 +16,8 @@ export default function  App(){
         setItems((items) => items.map((item) =>  item.id === id ?{...item, packed: !item.packed } :item))
     } 
     function handleDelteAll(){
-        setItems([]);
+        const confirmed = window.confirm("Are you really want to delete all the items?");
+        if(confirmed) {setItems([])}
     }
     // :item When you tick one box, you want to update the checked state for that specific item, but you don't want to accidentally change the checked state of any other boxes on the list.
     // The : item part makes sure that only the clicked box gets updated, while the others stay as they were.
