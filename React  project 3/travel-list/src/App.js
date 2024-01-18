@@ -1,3 +1,4 @@
+// Done with the app only  component part is left
 import React, { useState } from 'react';;
 //  We can use onlclick with but it only work when we click on the button we want action to occur when click enter.
 // Our next goal is how to put data which we got  from handleclick ( console.log(e)) to the place where we want it to show.
