@@ -1,5 +1,5 @@
-import "./styles.css";
-
+import "./App.css";
+// This accordion a mini project from my react botocamp
 const faqs = [
   {
     title: "Where are these chairs assembled?",
