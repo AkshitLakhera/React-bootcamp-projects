@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./App.css";
 // This accordion a mini project from my react botocamp
 const faqs = [
@@ -36,10 +37,16 @@ function Accordion({ data }) {
   );
 }
 function AccordionItem ({num,title,text}) {
-  return <div className="item">
+  const [isopen,setIsopen] = useState(false)
+  function handleToggle() {
+    setIsopen((isOpen) => !isOpen)
+  }
+  return (
+  <div className="item" onClick={handleToggle}>
     <p className="number"> {num < 9 ?`0${num + 1}`: num +1}</p>
     <p className="title">{title}</p>
-    <p className="icon">-</p>
-    <p className="content">{text}</p>
+    <p className="icon">{isopen ?"-" : "+"}</p>
+    {isopen && <p className="content-box">{text}</p>}
   </div>
+  );
 }
